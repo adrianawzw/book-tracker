@@ -91,5 +91,42 @@ El diseño del sistema se desarrollará bajo un enfoque de ingeniería de softwa
 
 Finalmente, la validación del sistema se realizará comprobando que el usuario pueda buscar libros mediante la API, registrar sus libros favoritos, almacenar resúmenes y opiniones, así como verificar que la información se guarde correctamente en la base de datos. También se evaluará que el sistema sea funcional y fácil de utilizar, asegurando que cumpla con el objetivo de mejorar la gestión del conocimiento del usuario.
 
+## Cronograma de actividades
 
+<p align="center">
+  <a href="https://github.com/user-attachments/assets/fdab8357-2942-4d53-8864-b253ca596eba">
+    <img src="https://github.com/user-attachments/assets/fdab8357-2942-4d53-8864-b253ca596eba" width="700">
+  </a>
+</p>
 
+## Desarrollo del proyecto
+
+### Aplicación
+
+El desarrollo de la aplicación se basa en el framework Spring Boot, aprovechando su ecosistema para crear una herramienta escalable. Se ha implementado una arquitectura en capas, lo que permite una clara separación de responsabilidades y facilita el mantenimiento del código.
+
+- **Gestión de Versiones y Colaboración:** El ciclo de vida del desarrollo se gestionó mediante Git, utilizando GitHub como repositorio centralizado. Esto permitió mantener un historial detallado de cambios, la gestión de ramas para nuevas funcionalidades y la implementación de un flujo de trabajo profesional para la integración de código.
+
+- **Consumo de Servicios Externos:** Para la obtención de datos bibliográficos, la aplicación se integra con la API de Open Library. Esta comunicación se realiza de forma asíncrona mediante WebClient, configurado con un encabezado User-Agent personalizado para garantizar una mayor tasa de transferencia. La lógica de negocio está diseñada para procesar respuestas JSON complejas y transformarlas en objetos de transferencia de datos (DTOs) optimizados.
+
+- **Gestión de Sesiones y Seguridad:** Se incluye un módulo de seguridad para el registro y autenticación de usuarios. Las contraseñas son procesadas mediante el algoritmo de hashing BCrypt antes de su almacenamiento, garantizando la confidencialidad de la información.
+
+- **Lógica de Negocio de Catalogación:** El sistema permite al usuario buscar obras en tiempo real, pero solo persiste la información en la base de datos local cuando el usuario decide agregar un libro a una de sus listas personales. Esto evita el almacenamiento innecesario de datos y optimiza los recursos del servidor.
+
+### Base de datos
+
+El sistema de persistencia utiliza PostgreSQL, gestionado a través de Spring Data JPA e Hibernate. El diseño se centra en un modelo relacional que permite una trazabilidad completa de la actividad del usuario sin redundancia de datos.
+
+- **Estructura Relacional:** El diseño se compone de cuatro entidades principales:
+  1. **Usuarios:** Almacena credenciales y perfiles.
+  2. **Libros:** Actúa como un catálogo local de los libros con los que los usuarios han interactuado, almacenando el ISBN como identificador único para sincronización con la API.
+  3. **Listas:** Permite la creación de categorías dinámicas vinculadas a cada usuario (Ej. "Favoritos", "Tesis", "Leídos").
+  4. **Reseñas:** Una tabla de asociación que vincula al usuario con un libro específico, permitiendo almacenar atributos personalizados como la calificación numérica y el comentario de retroalimentación.
+
+- **Optimización de Recursos Multimedia:** Para maximizar la eficiencia, la base de datos no almacena archivos binarios de imagen. En su lugar, guarda estructuras de URL dinámicas que apuntan al servidor de portadas de Open Library, delegando la carga de estos activos directamente al navegador del cliente bajo demanda.
+
+- **Integridad de Datos:** Se han implementado restricciones de unicidad (Unique Constraints) para asegurar que un usuario no pueda generar reseñas duplicadas para el mismo libro, manteniendo así la coherencia estadística del sistema.
+
+<p align="center">
+  <img width="700" alt="Diagrama de la Base de Datos" src="https://github.com/adrianawzw/book-tracker/raw/main/resultados/graficos/Diagrama_BD.png" />
+</p>
