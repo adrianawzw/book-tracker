@@ -12,29 +12,36 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "libros")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Libro {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "libro_id")
     private Long id;
 
-    @Column(nullable = false, length = 100)
-    private String nombres;
+    @Column(nullable = false, length = 200)
+    private String titulo;
 
-    @Column(nullable = false, length = 100)
-    private String apellidos;
+    @Column(length = 150)
+    private String autor;
 
-    @Column(nullable = false, unique = true, length = 150)
-    private String email;
+    @Column(length = 1000)
+    private String descripcion;
 
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "imagen_url")
+    private String imagenUrl;
 
-    @Column(nullable = false, length = 20)
-    private String rol;
+    @Column(name = "api_id", unique = true)
+    private String apiId;
+
+    @Column(name = "fecha_publicacion")
+    private String fechaPublicacion;
+
+    @Column(length = 100)
+    private String genero;
 }

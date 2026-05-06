@@ -1,8 +1,9 @@
 package com.booktracker.book_tracker.DTOs;
 
-public record UsuarioResponseDTO(
+public record UserResponseDTO(
         Long id,
         String nombres,
         String apellidos,
-        String email
+        String email,
+        String rol
 ) {}
