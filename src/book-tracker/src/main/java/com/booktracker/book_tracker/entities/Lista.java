@@ -29,6 +29,7 @@ public class Lista {
     @Column(nullable = false, length = 100)
     private String nombre;
 
+    //userid
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User usuario;
