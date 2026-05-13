@@ -8,7 +8,7 @@ import com.booktracker.book_tracker.entities.Libro;
 
 @Repository
 public interface LibroRepository extends JpaRepository<Libro, Long> {
-    Libro findByIsbn(String isbn);
+    Optional<Libro> findByApiId(String apiId);
 
     List<Libro> findByTituloContainingIgnoreCase(String titulo);
 
