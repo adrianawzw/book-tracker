@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.booktracker.book_tracker.entities.Resena;
 
 @Repository
-public interface ReseñaRepository extends JpaRepository<Resena, Long> {
+public interface ResenaRepository extends JpaRepository<Resena, Long> {
     List<Resena> findByUsuarioId(Long usuarioId);
 
     List<Resena> findByLibroId(Long libroId);

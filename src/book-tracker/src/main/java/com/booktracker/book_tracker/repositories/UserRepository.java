@@ -5,10 +5,9 @@ import org.springframework.stereotype.Repository;
 import com.booktracker.book_tracker.entities.User;
 
 @Repository
-public interface UsuarioRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+
     User findByEmail(String email);
-    User findByUsername(String username);
 
     boolean existsByEmail(String email);
-    boolean existsByUsername(String username);
 }
