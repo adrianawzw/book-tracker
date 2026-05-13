@@ -1,7 +1,6 @@
 package com.booktracker.book_tracker.repositories;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -9,10 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.booktracker.book_tracker.entities.Resena;
 
 @Repository
-public interface ResenaRepository extends JpaRepository<Resena, Long>{
+public interface ResenaRepository extends JpaRepository<Resena, Long> {
     List<Resena> findByUsuarioId(Long usuarioId);
 
     List<Resena> findByLibroId(Long libroId);
 
-    Optional<Resena> findByUsuarioIdAndLibroId(Long usuarioId, Long libroId);
+    Resena findByUsuarioIdAndLibroId(Long usuarioId, Long libroId);
+
 }
