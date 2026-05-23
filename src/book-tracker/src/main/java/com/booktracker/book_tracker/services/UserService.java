@@ -14,4 +14,6 @@ public interface UserService {
     UserResponseDTO crearUsuario(UserRequestDTO dto);
 
     void eliminarUsuario(Long id);
+
+    UserResponseDTO actualizarUsuario(Long id, UserRequestDTO dto);
 }

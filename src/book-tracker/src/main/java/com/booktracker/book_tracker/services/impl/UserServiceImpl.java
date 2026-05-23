@@ -59,4 +59,20 @@ public class UserServiceImpl implements UserService {
 
         userRepository.deleteById(id);
     }
+
+    @Override
+public UserResponseDTO actualizarUsuario(Long id, UserRequestDTO dto) {
+
+    User usuario = userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+    usuario.setNombres(dto.nombres());
+    usuario.setApellidos(dto.apellidos());
+    usuario.setEmail(dto.email());
+    usuario.setPassword(dto.password());
+
+    User actualizado = userRepository.save(usuario);
+
+    return UserMapper.toDTO(actualizado);
+}
 }
