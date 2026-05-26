@@ -9,6 +9,7 @@ import com.booktracker.book_tracker.DTOs.LibroResponseDTO;
 import com.booktracker.book_tracker.entities.Libro;
 import com.booktracker.book_tracker.mappers.LibroMapper;
 import com.booktracker.book_tracker.repositories.LibroRepository;
+import com.booktracker.book_tracker.exceptions.ResourceNotFoundException;
 import com.booktracker.book_tracker.services.LibroService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class LibroServiceImpl implements LibroService {
     public LibroResponseDTO obtenerPorId(Long id) {
 
         Libro libro = libroRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
 
         return LibroMapper.toDTO(libro);
     }
@@ -42,7 +43,7 @@ public class LibroServiceImpl implements LibroService {
         if (dto.apiId() != null &&
                 libroRepository.findByApiId(dto.apiId()).isPresent()) {
 
-            throw new RuntimeException("El apiId ya existe");
+            throw new IllegalArgumentException("El apiId ya existe");
         }
 
         Libro libro = LibroMapper.toEntity(dto);
@@ -56,7 +57,7 @@ public class LibroServiceImpl implements LibroService {
     public void eliminarLibro(Long id) {
 
         if (!libroRepository.existsById(id)) {
-            throw new RuntimeException("Libro no encontrado");
+            throw new ResourceNotFoundException("Libro no encontrado");
         }
 
         libroRepository.deleteById(id);

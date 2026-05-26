@@ -3,6 +3,7 @@ package com.booktracker.book_tracker.mappers;
 import com.booktracker.book_tracker.DTOs.UserRequestDTO;
 import com.booktracker.book_tracker.DTOs.UserResponseDTO;
 import com.booktracker.book_tracker.entities.User;
+import com.booktracker.book_tracker.util.RolesEnum;
 
 public class UserMapper {
 
@@ -12,7 +13,7 @@ public class UserMapper {
                 .apellidos(dto.apellidos())
                 .email(dto.email())
                 .password(dto.password())
-                .rol("USER")
+            .rol(RolesEnum.USER)
                 .build();
     }
 
@@ -22,7 +23,7 @@ public class UserMapper {
                 usuario.getNombres(),
                 usuario.getApellidos(),
                 usuario.getEmail(),
-                usuario.getRol()
+                usuario.getRol() != null ? usuario.getRol().name() : null
         );
     }
 }

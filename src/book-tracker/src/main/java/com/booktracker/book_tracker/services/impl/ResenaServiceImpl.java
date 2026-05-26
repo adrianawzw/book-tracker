@@ -13,6 +13,7 @@ import com.booktracker.book_tracker.mappers.ResenaMapper;
 import com.booktracker.book_tracker.repositories.LibroRepository;
 import com.booktracker.book_tracker.repositories.ResenaRepository;
 import com.booktracker.book_tracker.repositories.UserRepository;
+import com.booktracker.book_tracker.exceptions.ResourceNotFoundException;
 import com.booktracker.book_tracker.services.ResenaService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,16 +30,16 @@ public class ResenaServiceImpl implements ResenaService {
     public ResenaResponseDTO crearResena(ResenaRequestDTO dto) {
 
         User usuario = userRepository.findById(dto.usuarioId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         Libro libro = libroRepository.findById(dto.libroId())
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
 
         Resena existente = resenaRepository
                 .findByUsuarioIdAndLibroId(dto.usuarioId(), dto.libroId());
 
         if (existente != null) {
-            throw new RuntimeException("El usuario ya reseñó este libro");
+            throw new IllegalArgumentException("El usuario ya reseñó este libro");
         }
 
         Resena resena = ResenaMapper.toEntity(dto, usuario, libro);
@@ -60,7 +61,7 @@ public class ResenaServiceImpl implements ResenaService {
     public ResenaResponseDTO obtenerPorId(Long id) {
 
         Resena resena = resenaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Reseña no encontrada"));
+            .orElseThrow(() -> new ResourceNotFoundException("Reseña no encontrada"));
 
         return ResenaMapper.toDTO(resena);
     }

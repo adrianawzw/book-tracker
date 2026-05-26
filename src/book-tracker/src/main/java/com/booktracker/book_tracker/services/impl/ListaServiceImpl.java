@@ -11,6 +11,7 @@ import com.booktracker.book_tracker.entities.User;
 import com.booktracker.book_tracker.mappers.ListaMapper;
 import com.booktracker.book_tracker.repositories.ListaRepository;
 import com.booktracker.book_tracker.repositories.UserRepository;
+import com.booktracker.book_tracker.exceptions.ResourceNotFoundException;
 import com.booktracker.book_tracker.services.ListaService;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class ListaServiceImpl implements ListaService {
     public ListaResponseDTO crearLista(ListaRequestDTO dto) {
 
         User usuario = userRepository.findById(dto.userId())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         Lista lista = ListaMapper.toEntity(dto, usuario);
 
@@ -47,7 +48,7 @@ public class ListaServiceImpl implements ListaService {
     public ListaResponseDTO obtenerPorId(Long id) {
 
         Lista lista = listaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Lista no encontrada"));
+            .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
 
         return ListaMapper.toDTO(lista);
     }

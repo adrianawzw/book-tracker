@@ -13,6 +13,7 @@ import com.booktracker.book_tracker.mappers.LibroEnListaMapper;
 import com.booktracker.book_tracker.repositories.LibroEnListaRepository;
 import com.booktracker.book_tracker.repositories.LibroRepository;
 import com.booktracker.book_tracker.repositories.ListaRepository;
+import com.booktracker.book_tracker.exceptions.ResourceNotFoundException;
 import com.booktracker.book_tracker.services.LibroEnListaService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,10 +30,10 @@ public class LibroEnListaServiceImpl implements LibroEnListaService {
     public LibroEnListaResponseDTO agregarLibroALista(LibroEnListaRequestDTO dto) {
 
         Libro libro = libroRepository.findById(dto.libroId())
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
 
         Lista lista = listaRepository.findById(dto.listaId())
-                .orElseThrow(() -> new RuntimeException("Lista no encontrada"));
+            .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
 
         LibroEnLista entity = LibroEnListaMapper.toEntity(dto, libro, lista);
 
@@ -52,7 +53,7 @@ public class LibroEnListaServiceImpl implements LibroEnListaService {
     @Override
     public LibroEnListaResponseDTO obtenerPorId(Long id) {
         LibroEnLista entity = libroEnListaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Registro no encontrado"));
+            .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
 
         return LibroEnListaMapper.toDTO(entity);
     }
