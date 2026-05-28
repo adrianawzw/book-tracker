@@ -17,7 +17,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+
+
     private final UserRepository userRepository;
+
+
 
     @Override
     public List<UserResponseDTO> obtenerTodos() {
@@ -30,8 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO obtenerPorId(Long id) {
 
+
         User usuario = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+                .orElseThrow(() -> new IllegalStateException("Usuario inválido"));
 
         return UserMapper.toDTO(usuario);
     }
