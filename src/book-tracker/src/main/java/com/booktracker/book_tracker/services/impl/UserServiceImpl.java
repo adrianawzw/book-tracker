@@ -28,7 +28,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
 
-
     @Override
     public List<UserResponseDTO> obtenerTodos() {
         return userRepository.findAll()
@@ -40,15 +39,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserResponseDTO obtenerPorId(Long id) {
 
-
         User usuario = userRepository.findById(id)
-<<<<<<< HEAD
             .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
-=======
-
-                .orElseThrow(() -> new IllegalStateException("Usuario inválido"));
->>>>>>> develop
-
         return UserMapper.toDTO(usuario);
     }
 
