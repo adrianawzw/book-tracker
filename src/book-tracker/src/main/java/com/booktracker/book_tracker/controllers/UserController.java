@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.booktracker.book_tracker.DTOs.UserRequestDTO;
 import com.booktracker.book_tracker.DTOs.UserResponseDTO;
+import com.booktracker.book_tracker.entities.Token;
+import com.booktracker.book_tracker.services.TokenService;
 import com.booktracker.book_tracker.services.UserService;
 
 import jakarta.validation.Valid;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserService userService;
+    private final TokenService tokenService;
 
     @GetMapping
     public List<UserResponseDTO> obtenerTodos() {
@@ -44,10 +47,25 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-public UserResponseDTO actualizarUsuario(
-        @PathVariable Long id,
-        @RequestBody UserRequestDTO dto) {
+    public UserResponseDTO actualizarUsuario(
+            @PathVariable Long id,
+            @Valid @RequestBody UserRequestDTO dto) {
 
-    return userService.actualizarUsuario(id, dto);
-}
+        return userService.actualizarUsuario(id, dto);
+    }
+
+    @GetMapping("/user")
+    public String userMethod() {
+        return "Looged as user or admin";
+    }
+
+    @GetMapping("/admin")
+    public String adminMethod() {
+        return "Looged as admin";
+    }
+
+    @GetMapping("/admin/get-tokens/{id}")
+    public List<Token> adminMethodGetTokensByUser(@PathVariable Long id) {
+        return tokenService.getTokensByUserId(id);
+    }
 }
