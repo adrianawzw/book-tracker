@@ -1,14 +1,17 @@
 package com.booktracker.book_tracker.services.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.booktracker.book_tracker.DTOs.ListaRequestDTO;
 import com.booktracker.book_tracker.DTOs.ListaResponseDTO;
+import com.booktracker.book_tracker.entities.Actividad;
 import com.booktracker.book_tracker.entities.Lista;
 import com.booktracker.book_tracker.entities.User;
 import com.booktracker.book_tracker.mappers.ListaMapper;
+import com.booktracker.book_tracker.repositories.ActividadRepository;
 import com.booktracker.book_tracker.repositories.ListaRepository;
 import com.booktracker.book_tracker.repositories.UserRepository;
 import com.booktracker.book_tracker.exceptions.ResourceNotFoundException;
@@ -22,18 +25,27 @@ public class ListaServiceImpl implements ListaService {
 
     private final ListaRepository listaRepository;
     private final UserRepository userRepository;
+    private final ActividadRepository actividadRepository;
 
     @Override
     public ListaResponseDTO crearLista(ListaRequestDTO dto) {
 
         User usuario = userRepository.findById(dto.userId())
-            .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
         Lista lista = ListaMapper.toEntity(dto, usuario);
 
-        return ListaMapper.toDTO(
-                listaRepository.save(lista)
-        );
+        Lista listaGuardada = listaRepository.save(lista);
+
+        Actividad actividad = Actividad.builder()
+                .usuario(usuario)
+                .tipo("CREO_LISTA")
+                .fecha(LocalDateTime.now())
+                .build();
+
+        actividadRepository.save(actividad);
+
+        return ListaMapper.toDTO(listaGuardada);
     }
 
     @Override
@@ -48,7 +60,7 @@ public class ListaServiceImpl implements ListaService {
     public ListaResponseDTO obtenerPorId(Long id) {
 
         Lista lista = listaRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
 
         return ListaMapper.toDTO(lista);
     }
