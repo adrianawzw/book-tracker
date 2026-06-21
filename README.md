@@ -4,7 +4,7 @@
 - Gerardo Adrian Ramos Valdivia, U23273502  
 - Rojas Gamonal Samir Angel, U23243868  
 - Salazar Camacho Sandro Piero, U23266038  
-- Tapia Canta Adriana Lucía, U23202658  
+- Tapia Canta Adriana Lucia, U23202658  
 
 ### Docente:
 Jose Luis Milla Flores  

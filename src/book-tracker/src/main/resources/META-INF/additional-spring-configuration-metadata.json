@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "application.jwt.refresh-token-expiration-after-days",
+      "type": "java.lang.Integer",
+      "description": "Duration of the refresh token in days"
+    },
+    {
+      "name": "application.jwt.token-expiration-after-days",
+      "type": "java.lang.Integer",
+      "description": "Duration of the token in days"
+    },
+    {
+      "name": "application.jwt.token-prefix",
+      "type": "java.lang.String",
+      "description": "Token's prefix"
+    },
+    {
+      "name": "application.jwt.secret-key",
+      "type": "java.lang.String",
+      "description": "Secret password for generating Tokens"
+    }
+  ]
+}
