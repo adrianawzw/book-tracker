@@ -17,7 +17,7 @@ public class BookTrackerApplication {
 		SpringApplication.run(BookTrackerApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner commandLineRunner(
 			UserRepository userRepository,
 			PasswordEncoder passwordEncoder) {
@@ -34,5 +34,5 @@ public class BookTrackerApplication {
                 userRepository.save(admin);
             }
 		};
-	}
+	}*/
 }
