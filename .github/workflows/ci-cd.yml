@@ -38,12 +38,11 @@ jobs:
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - name: 5. Analisis de Seguridad de Dependencias (Snyk)
-        uses: snyk/actions/setup@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: --severity-threshold=high --file=src/book-tracker/pom.xml
+        run: |
+          npm install -g snyk
+          snyk test --severity-threshold=high
 
       - name: 6. Docker Login
         uses: docker/login-action@v3
