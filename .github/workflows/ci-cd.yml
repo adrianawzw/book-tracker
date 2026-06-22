@@ -37,13 +37,17 @@ jobs:
             -Dsonar.organization=adrianawzw \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
+      - name: Debug Directorio
+        run: |
+          pwd
+          ls -la
+    
       - name: 5. Analisis de Seguridad de Dependencias (Snyk)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         run: |
           npm install -g snyk
           snyk auth $SNYK_TOKEN
-          cd src/book-tracker
           snyk test --file=pom.xml --severity-threshold=high
 
       - name: 6. Docker Login
