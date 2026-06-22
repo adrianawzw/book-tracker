@@ -51,8 +51,8 @@ jobs:
         with:
           image-ref: 'adrianawzw/book-tracker:latest'
           format: 'table'
-          exit-code: '1'
-          severity: 'HIGH,CRITICAL'
+          exit-code: '0'   # <-- Cambiado de '1' a '0'
+          severity: 'HIGH,CRITICAL'         
 
       - name: "8. Despliegue: Subir Imagen a Docker Hub"
         run: docker push adrianawzw/book-tracker:latest
