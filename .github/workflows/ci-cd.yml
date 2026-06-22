@@ -40,6 +40,7 @@ jobs:
       - name: 5. Analisis de Seguridad de Dependencias (Snyk)
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          NODE_OPTIONS: --max-old-space-size=4096
         run: |
           npm install -g snyk
           snyk test --severity-threshold=high
