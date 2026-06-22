@@ -26,7 +26,7 @@ jobs:
 
       - name: 3. Compilacion y Pruebas Unitarias (JaCoCo Coverage)
         run: mvn clean verify
-        
+
       - name: 4. Analisis de Calidad de Codigo (SonarCloud)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,8 +51,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: 7. Empaquetado: Construir Imagen Docker Multi-Stage
-        run: docker build -t adrianawzw/book-tracker:latest .
+      - name: "7. Empaquetado: Construir Imagen Docker Multi-Stage"
+        run: |
+          docker build -t adrianawzw/book-tracker:latest .
 
       - name: 8. Escaneo de Vulnerabilidades de Imagen (Trivy)
         uses: aquasecurity/trivy-action@master
@@ -62,5 +63,5 @@ jobs:
           exit-code: '1'
           severity: 'HIGH,CRITICAL'
 
-      - name: 9. Despliegue: Subir Imagen a Docker Hub
+      - name: "9. Despliegue: Subir Imagen a Docker Hub"
         run: docker push adrianawzw/book-tracker:latest
