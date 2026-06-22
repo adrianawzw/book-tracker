@@ -49,7 +49,6 @@ jobs:
           npm install -g snyk
           snyk auth $SNYK_TOKEN
 
-          cd src/book-tracker
           chmod +x mvnw
 
           snyk test --file=pom.xml -d
