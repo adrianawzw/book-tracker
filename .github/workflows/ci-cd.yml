@@ -43,7 +43,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
-          args: --severity-threshold=high
+          args: --severity-threshold=high --file=src/book-tracker/pom.xml
 
       - name: 6. Docker Login
         uses: docker/login-action@v3
