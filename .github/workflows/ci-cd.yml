@@ -38,7 +38,7 @@ jobs:
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - name: 5. Analisis de Seguridad de Dependencias (Snyk)
-        uses: snyk/actions/maven@master
+        uses: snyk/actions/setup@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
