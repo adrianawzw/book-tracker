@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -57,4 +58,14 @@ public class GlobalExceptionHandler {
         ApiError err = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error", List.of(ex.getMessage()));
         return new ResponseEntity<>(err, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiError> handleJsonMalFormado(HttpMessageNotReadableException ex) {
+        ApiError err = new ApiError(
+                HttpStatus.BAD_REQUEST.value(),
+                "JSON mal formado",
+                List.of("Verifica el formato del cuerpo de la petición"));
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+    }
+
 }
