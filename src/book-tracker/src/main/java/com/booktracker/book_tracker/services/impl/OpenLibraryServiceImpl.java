@@ -3,6 +3,7 @@ package com.booktracker.book_tracker.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import org.springframework.web.client.ResourceAccessException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,10 +21,18 @@ public class OpenLibraryServiceImpl implements OpenLibraryService {
 
         String url = "https://openlibrary.org/search.json?q=" + titulo;
 
-        Map response = restTemplate.getForObject(url, Map.class);
+        Map response;
 
-        List<Map<String, Object>> docs =
-                (List<Map<String, Object>>) response.get("docs");
+        try {
+            response = restTemplate.getForObject(url, Map.class);
+        } catch (ResourceAccessException e) {
+            throw new RuntimeException("La API de OpenLibrary no está disponible. Intente más tarde.", e);
+        }
+
+        if (response == null)
+            return new ArrayList<>();
+
+        List<Map<String, Object>> docs = (List<Map<String, Object>>) response.get("docs");
 
         List<OpenLibraryBookDTO> libros = new ArrayList<>();
 
@@ -36,8 +45,7 @@ public class OpenLibraryServiceImpl implements OpenLibraryService {
             String autor = "Desconocido";
 
             if (libro.get("author_name") != null) {
-                List<String> autores =
-                        (List<String>) libro.get("author_name");
+                List<String> autores = (List<String>) libro.get("author_name");
 
                 autor = autores.get(0);
             }
@@ -48,9 +56,7 @@ public class OpenLibraryServiceImpl implements OpenLibraryService {
                     new OpenLibraryBookDTO(
                             tituloLibro,
                             autor,
-                            apiId
-                    )
-            );
+                            apiId));
         }
 
         return libros;
