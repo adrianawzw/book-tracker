@@ -6,9 +6,9 @@ import jakarta.validation.constraints.Size;
 public record LibroRequestDTO(
         @NotBlank @Size(max = 200) String titulo,
         @NotBlank @Size(max = 150) String autor,
-        @NotBlank @Size(max = 1000) String descripcion,
+        @Size(max = 1000) String descripcion,
         String imagenUrl,
         String apiId,
         String fechaPublicacion,
-        @NotBlank @Size(max = 100) String genero
+        @Size(max = 100) String genero
 ) {}
