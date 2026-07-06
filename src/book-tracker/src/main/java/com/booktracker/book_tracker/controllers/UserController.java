@@ -11,6 +11,8 @@ import com.booktracker.book_tracker.entities.Token;
 import com.booktracker.book_tracker.services.TokenService;
 import com.booktracker.book_tracker.services.UserService;
 
+import org.springframework.security.core.Authentication;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -52,6 +54,12 @@ public class UserController {
             @Valid @RequestBody UserRequestDTO dto) {
 
         return userService.actualizarUsuario(id, dto);
+    }
+
+    @GetMapping("/me")
+    public UserResponseDTO obtenerUsuarioActual(Authentication authentication) {
+        String email = authentication.getName();
+        return userService.obtenerPorEmail(email);
     }
 
     @GetMapping("/user")
