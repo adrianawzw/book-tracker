@@ -3,6 +3,7 @@ package com.booktracker.book_tracker.services.impl;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -72,8 +73,8 @@ public class LibroServiceImplTest {
 
         Libro libroExistente = new Libro();
 
-        when(libroRepository.findByApiId("OL123"))
-                .thenReturn(Optional.of(libroExistente));
+        when(libroRepository.findByApiId(eq("OL123")))
+        .thenReturn(Optional.of(libroExistente));
 
         assertThrows(
                 IllegalArgumentException.class,

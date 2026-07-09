@@ -35,7 +35,7 @@ public class SecurityConfig {
         .csrf(AbstractHttpConfigurer::disable)
         .cors(Customizer.withDefaults())
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+            .requestMatchers("/", "/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
             .requestMatchers("/api/users/admin/**", "/api/admin/**").hasAnyRole("ADMIN")
             .requestMatchers("/api/users/**").hasAnyRole("USER", "ADMIN")
             .anyRequest().authenticated()
@@ -54,7 +54,7 @@ public class SecurityConfig {
     UrlBasedCorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000","http://localhost:4200","http://localhost:5173" ));
+        config.setAllowedOrigins(Arrays.asList("http://127.0.0.1:3000","http://localhost:4200","http://localhost:5173", "http://127.0.0.1:4200"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
