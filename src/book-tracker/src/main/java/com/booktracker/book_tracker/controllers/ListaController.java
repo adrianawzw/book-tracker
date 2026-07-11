@@ -25,6 +25,14 @@ public class ListaController {
         return listaService.crearLista(dto);
     }
 
+    @PutMapping("/{id}")
+    public ListaResponseDTO actualizarLista(
+            @PathVariable Long id,
+            @Valid @RequestBody ListaRequestDTO dto) {
+
+        return listaService.actualizarLista(id, dto);
+    }
+
     @GetMapping
     public List<ListaResponseDTO> obtenerTodas() {
         return listaService.obtenerTodas();

@@ -36,11 +36,13 @@ public class LibroEnListaServiceImpl implements LibroEnListaService {
     public LibroEnListaResponseDTO agregarLibroALista(LibroEnListaRequestDTO dto) {
 
         Libro libro = libroRepository.findById(dto.libroId())
-            .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
 
         Lista lista = listaRepository.findById(dto.listaId())
-            .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
-
+                .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
+        if (libroEnListaRepository.existsByLibroIdAndListaId(dto.libroId(), dto.listaId())) {
+            throw new IllegalArgumentException("Este libro ya está en la lista.");
+        }
         LibroEnLista entity = LibroEnListaMapper.toEntity(dto, libro, lista);
 
         LibroEnLista libroEnListaGuardada = libroEnListaRepository.save(entity);
@@ -67,7 +69,7 @@ public class LibroEnListaServiceImpl implements LibroEnListaService {
     @Override
     public LibroEnListaResponseDTO obtenerPorId(Long id) {
         LibroEnLista entity = libroEnListaRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Registro no encontrado"));
 
         return LibroEnListaMapper.toDTO(entity);
     }
