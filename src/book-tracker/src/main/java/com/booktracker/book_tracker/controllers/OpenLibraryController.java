@@ -21,9 +21,14 @@ public class OpenLibraryController {
 
     @GetMapping("/buscar")
     public List<OpenLibraryBookDTO> buscarLibros(
-            @RequestParam String titulo
-    ) {
+            @RequestParam String titulo,
+            @RequestParam(defaultValue = "20") int limit) {
+        return openLibraryService.buscarLibros(titulo, limit);
+    }
 
-        return openLibraryService.buscarLibros(titulo);
+    @GetMapping("/populares")
+    public List<OpenLibraryBookDTO> librosPopulares(
+            @RequestParam(defaultValue = "20") int limit) {
+        return openLibraryService.librosPopulares(limit);
     }
 }

@@ -16,4 +16,6 @@ public interface ListaService {
     void eliminarLista(Long id);
 
     List<ListaResponseDTO> obtenerPorUsuario(Long usuarioId);
+
+    ListaResponseDTO actualizarLista(Long id, ListaRequestDTO dto);
 }

@@ -1,7 +1,8 @@
 package com.booktracker.book_tracker.services.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
@@ -24,62 +25,65 @@ import com.booktracker.book_tracker.repositories.LibroRepository;
 @ExtendWith(MockitoExtension.class)
 public class LibroServiceImplTest {
 
-    @Mock
-    private LibroRepository libroRepository;
+        @Mock
+        private LibroRepository libroRepository;
 
-    @InjectMocks
-    private LibroServiceImpl libroService;
+        @InjectMocks
+        private LibroServiceImpl libroService;
 
-    @Test
-    void crearLibro_DeberiaGuardarLibro() {
+        @Test
+        void crearLibro_DeberiaGuardarLibro() {
 
-        LibroRequestDTO dto = new LibroRequestDTO(
-                "Clean Code",
-                "Robert Martin",
-                "Libro de buenas prácticas",
-                "imagen.jpg",
-                "OL123",
-                "2008",
-                "Programación");
+                LibroRequestDTO dto = new LibroRequestDTO(
+                                "Clean Code",
+                                "Robert Martin",
+                                "Libro de buenas prácticas",
+                                "imagen.jpg",
+                                "OL123",
+                                "2008",
+                                "Programación");
 
-        when(libroRepository.findByApiId("OL123"))
-                .thenReturn(Optional.empty());
+                when(libroRepository.findByApiId("OL123"))
+                                .thenReturn(Optional.empty());
 
-        Libro libroGuardado = new Libro();
-        libroGuardado.setId(1L);
-        libroGuardado.setApiId("OL123");
+                Libro libroGuardado = new Libro();
+                libroGuardado.setId(1L);
+                libroGuardado.setApiId("OL123");
 
-        when(libroRepository.save(any(Libro.class)))
-                .thenReturn(libroGuardado);
+                when(libroRepository.save(any(Libro.class)))
+                                .thenReturn(libroGuardado);
 
-        LibroResponseDTO response = libroService.crearLibro(dto);
+                LibroResponseDTO response = libroService.crearLibro(dto);
 
-        assertNotNull(response);
+                assertNotNull(response);
 
-        verify(libroRepository).save(any(Libro.class));
-    }
+                verify(libroRepository).save(any(Libro.class));
+        }
 
-    @Test
-    void crearLibro_DeberiaLanzarExcepcionSiApiIdExiste() {
+        @Test
+        void crearLibro_DeberiaRetornarLibroExistenteSiApiIdYaExiste() {
 
-        LibroRequestDTO dto = new LibroRequestDTO(
-                "Clean Code",
-                "Robert Martin",
-                "Libro de buenas prácticas",
-                "imagen.jpg",
-                "OL123",
-                "2008",
-                "Programación");
+                LibroRequestDTO dto = new LibroRequestDTO(
+                                "Clean Code",
+                                "Robert Martin",
+                                "Libro de buenas prácticas",
+                                "imagen.jpg",
+                                "OL123",
+                                "2008",
+                                "Programación");
 
-        Libro libroExistente = new Libro();
+                Libro libroExistente = new Libro();
+                libroExistente.setId(5L);
+                libroExistente.setApiId("OL123");
 
-        when(libroRepository.findByApiId(eq("OL123")))
-        .thenReturn(Optional.of(libroExistente));
+                when(libroRepository.findByApiId(eq("OL123")))
+                                .thenReturn(Optional.of(libroExistente));
 
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> libroService.crearLibro(dto));
+                LibroResponseDTO response = libroService.crearLibro(dto);
 
-        verify(libroRepository, never()).save(any());
-    }
+                assertNotNull(response);
+                assertEquals(5L, response.id());
+
+                verify(libroRepository, never()).save(any());
+        }
 }

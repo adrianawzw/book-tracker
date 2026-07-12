@@ -41,16 +41,15 @@ public class LibroServiceImpl implements LibroService {
     @Override
     public LibroResponseDTO crearLibro(LibroRequestDTO dto) {
 
-        Optional<Libro> existente = libroRepository.findByApiId(dto.apiId());
-
-        if (existente.isPresent()) {
-            throw new IllegalArgumentException("Ya existe un libro con el apiId: " + dto.apiId());
+        if (dto.apiId() != null && !dto.apiId().isBlank()) {
+            Optional<Libro> existente = libroRepository.findByApiId(dto.apiId());
+            if (existente.isPresent()) {
+                return LibroMapper.toDTO(existente.get());
+            }
         }
 
         Libro libro = LibroMapper.toEntity(dto);
-
-        return LibroMapper.toDTO(
-                libroRepository.save(libro));
+        return LibroMapper.toDTO(libroRepository.save(libro));
     }
 
     @Override
