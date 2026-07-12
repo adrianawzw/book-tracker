@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.booktracker.book_tracker.DTOs.OpenLibraryAuthorDTO;
 import com.booktracker.book_tracker.DTOs.OpenLibraryBookDTO;
 import com.booktracker.book_tracker.services.OpenLibraryService;
 
@@ -30,5 +31,19 @@ public class OpenLibraryController {
     public List<OpenLibraryBookDTO> librosPopulares(
             @RequestParam(defaultValue = "20") int limit) {
         return openLibraryService.librosPopulares(limit);
+    }
+
+    @GetMapping("/autores")
+    public List<OpenLibraryAuthorDTO> buscarAutores(
+            @RequestParam String nombre,
+            @RequestParam(defaultValue = "20") int limit) {
+        return openLibraryService.buscarAutores(nombre, limit);
+    }
+
+    @GetMapping("/autores/{key}/libros")
+    public List<OpenLibraryBookDTO> librosPorAutor(
+            @org.springframework.web.bind.annotation.PathVariable String key,
+            @RequestParam(defaultValue = "20") int limit) {
+        return openLibraryService.librosPorAutor(key, limit);
     }
 }
