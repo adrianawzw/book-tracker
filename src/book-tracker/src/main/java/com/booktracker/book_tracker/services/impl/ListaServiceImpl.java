@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-
+import com.booktracker.book_tracker.repositories.LibroEnListaRepository;
+import jakarta.transaction.Transactional;
 import com.booktracker.book_tracker.DTOs.ListaRequestDTO;
 import com.booktracker.book_tracker.DTOs.ListaResponseDTO;
 import com.booktracker.book_tracker.entities.Actividad;
@@ -26,6 +27,7 @@ public class ListaServiceImpl implements ListaService {
     private final ListaRepository listaRepository;
     private final UserRepository userRepository;
     private final ActividadRepository actividadRepository;
+    private final LibroEnListaRepository libroEnListaRepository;
 
     @Override
     public ListaResponseDTO crearLista(ListaRequestDTO dto) {
@@ -49,6 +51,17 @@ public class ListaServiceImpl implements ListaService {
     }
 
     @Override
+    public ListaResponseDTO actualizarLista(Long id, ListaRequestDTO dto) {
+
+        Lista lista = listaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Lista no encontrada"));
+
+        lista.setNombre(dto.nombre());
+
+        return ListaMapper.toDTO(listaRepository.save(lista));
+    }
+
+    @Override
     public List<ListaResponseDTO> obtenerTodas() {
         return listaRepository.findAll()
                 .stream()
@@ -66,7 +79,13 @@ public class ListaServiceImpl implements ListaService {
     }
 
     @Override
+    @Transactional
     public void eliminarLista(Long id) {
+        if (!listaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Lista no encontrada");
+        }
+
+        libroEnListaRepository.deleteByListaId(id);
         listaRepository.deleteById(id);
     }
 

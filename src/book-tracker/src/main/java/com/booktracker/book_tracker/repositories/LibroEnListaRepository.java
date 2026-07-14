@@ -11,6 +11,10 @@ import com.booktracker.book_tracker.entities.LibroEnLista;
 public interface LibroEnListaRepository extends JpaRepository<LibroEnLista, Long> {
     List<LibroEnLista> findByListaId(Long listaId);
 
+    boolean existsByLibroIdAndListaId(Long libroId, Long listaId);
+
+    void deleteByListaId(Long listaId);
+
     List<LibroEnLista> findByLibroId(Long libroId);
 
 }

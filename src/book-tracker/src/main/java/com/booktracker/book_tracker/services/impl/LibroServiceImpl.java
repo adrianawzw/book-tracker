@@ -1,6 +1,7 @@
 package com.booktracker.book_tracker.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class LibroServiceImpl implements LibroService {
     public LibroResponseDTO obtenerPorId(Long id) {
 
         Libro libro = libroRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Libro no encontrado"));
 
         return LibroMapper.toDTO(libro);
     }
@@ -40,17 +41,15 @@ public class LibroServiceImpl implements LibroService {
     @Override
     public LibroResponseDTO crearLibro(LibroRequestDTO dto) {
 
-        if (dto.apiId() != null &&
-                libroRepository.findByApiId(dto.apiId()).isPresent()) {
-
-            throw new IllegalArgumentException("El apiId ya existe");
+        if (dto.apiId() != null && !dto.apiId().isBlank()) {
+            Optional<Libro> existente = libroRepository.findByApiId(dto.apiId());
+            if (existente.isPresent()) {
+                return LibroMapper.toDTO(existente.get());
+            }
         }
 
         Libro libro = LibroMapper.toEntity(dto);
-
-        Libro guardado = libroRepository.save(libro);
-
-        return LibroMapper.toDTO(guardado);
+        return LibroMapper.toDTO(libroRepository.save(libro));
     }
 
     @Override

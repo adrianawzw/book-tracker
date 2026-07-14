@@ -1,14 +1,7 @@
 package com.booktracker.book_tracker;
 
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import com.booktracker.book_tracker.entities.User;
-import com.booktracker.book_tracker.repositories.UserRepository;
-import com.booktracker.book_tracker.util.RolesEnum;
 
 @SpringBootApplication
 public class BookTrackerApplication {
@@ -17,7 +10,7 @@ public class BookTrackerApplication {
 		SpringApplication.run(BookTrackerApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	CommandLineRunner commandLineRunner(
 			UserRepository userRepository,
 			PasswordEncoder passwordEncoder) {
@@ -34,5 +27,5 @@ public class BookTrackerApplication {
                 userRepository.save(admin);
             }
 		};
-	}
+	}*/
 }
