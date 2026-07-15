@@ -1,4 +1,4 @@
-#  Gestor de Biblioteca
+# 📚 Book Tracke
 
 ### Autores:
 - Gerardo Adrian Ramos Valdivia, U23273502  
@@ -130,3 +130,53 @@ El sistema de persistencia utiliza PostgreSQL, gestionado a través de Spring Da
 <p align="center">
   <img width="700" alt="Diagrama de la Base de Datos" src="https://github.com/adrianawzw/book-tracker/raw/main/resultados/graficos/Diagrama_BD.png" />
 </p>
+
+# 🌐 Accesos del Proyecto
+
+## Aplicación desplegada
+
+| Componente | Enlace |
+|------------|---------|
+| Frontend (Angular - Azure Static Web Apps) | https://wonderful-meadow-05877fe0f.7.azurestaticapps.net |
+| Backend API (Spring Boot - Azure App Service) | book-tracker-api-c6e4ghewh5e3dkd5.canadacentral-01.azurewebsites.net |
+| Swagger UI | https://book-tracker-api-c6e4ghewh5e3dkd5.canadacentral-01.azurewebsites.net/swagger-ui/index.html |
+
+---
+
+## Repositorios
+
+### Backend
+https://github.com/adrianawzw/book-tracker
+
+### Frontend
+https://github.com/adrianawzw/book-tracker-app
+
+---
+
+## Tecnologías utilizadas
+
+### Frontend
+- Angular
+- Bootstrap
+- TypeScript
+
+### Backend
+- Spring Boot
+- Spring Security
+- JWT
+- Spring Data JPA
+- PostgreSQL
+- Swagger/OpenAPI
+
+### DevSecOps
+- GitHub
+- GitHub Actions
+- Docker
+- Docker Hub
+- Azure App Service
+- Azure Static Web Apps
+- Azure Database for PostgreSQL
+- SonarCloud
+- JaCoCo
+- Trivy
+- GitHub Secrets
